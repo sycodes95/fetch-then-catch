@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <img src="#">
+  <button class="newGif">New Cat</button>
+  <label for="newGifSearch">Search a gif!</label>
+  <input type="text" class="newGifSearch">
+  <script>
+    const img = document.querySelector('img');
+    fetch('https://api.giphy.com/v1/gifs/translate?api_key=mCpulUKP7Dau7c0Ki2PVzwmiNZD4wfhG&s=cats', {mode: 'cors'})
+    .then(function(response){
+        
+        return response.json();
+    })
+    .then(function(response){
+        img.src = response.data.images.original.url;
+    });
+
+    const newGifButton = document.querySelector('.newGif');
+    newGifButton.addEventListener('click', ()=>{
+        fetch('https://api.giphy.com/v1/gifs/translate?api_key=mCpulUKP7Dau7c0Ki2PVzwmiNZD4wfhG&s=dogs', {mode: 'cors'})
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(response){
+            img.src = response.data.images.original.url;
+        });
+        
+        
+        
+
+    })
+
+    const newGifSearch = document.querySelector('.newGifSearch');
+    newGifSearch.addEventListener('keypress', (e)=>{
+        if (e.key === 'Enter'){
+            fetch(`https://api.giphy.com/v1/gifs/translate?api_key=mCpulUKP7Dau7c0Ki2PVzwmiNZD4wfhG&s=${newGifSearch.value}`, {mode: 'cors'})
+            .then(function(response){
+                
+                return response.json();
+            })
+            .then(function(response){
+                img.src = response.data.images.original.url;
+            })
+            .catch(error => alert('error: no results'))
+            
+
+        }
+    })
+  </script>
+</body>
+</html>
